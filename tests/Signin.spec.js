@@ -30,6 +30,7 @@ test('invalid SignIn', async({page})=>{
 })
 
 test('journal page', async({page})=>{
+  await page.goto('https://stage.smartgardener.com/');
   await page.getByPlaceholder('Username or Email').click();
   await page.getByPlaceholder('Username or Email').fill('nitesh.agarwal@kreeti.com');
   await page.getByPlaceholder('Password').click();
