@@ -23,7 +23,7 @@ test('invalid SignIn', async({page})=>{
     const errorMessageLocator = page.locator('#flash .error');
     await errorMessageLocator.waitFor({ state: 'visible' });
     const errorMessage = await errorMessageLocator.textContent();
-    expect(errorMessage).toBe('Invalid username or pas');
+    expect(errorMessage).toBe('Invalid username or password.');
 })
 
 test('journal page', async({page})=>{
