@@ -96,8 +96,9 @@ test('Journal', async ({ page }) => {
   // const heading = await page.locator('.large-text.left');
   // await expect(heading).toHaveText('Journal for this');
 
-  const {  subject, body } = await getGmailMessages();
-  expect(subject).toBe(`Your thoughts matter – capture them in a Confluence page`);
+  const {  subject, receivedVerificationCode } = await getGmailMessages();
+  expect(subject).toBe(`Your Centigrade verification code: 795817`);
+  expect(receivedVerificationCode).toBe(795817);
   // const expectedLinkPattern = /Accept invitation \[(https?:\/\/[^\]]+)\]/;
   // const invitationLink = body.match(expectedLinkPattern)[1];
   // expect(invitationLink).toContain(`https://devfoundry.centigrade.earth/create-account`);
