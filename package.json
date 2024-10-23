@@ -10,5 +10,9 @@
   "devDependencies": {
     "@playwright/test": "^1.46.1",
     "@types/node": "^22.5.2"
+  },
+  "dependencies": {
+    "google-auth-library": "^9.14.2",
+    "googleapis": "^144.0.0"
   }
 }
