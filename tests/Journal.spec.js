@@ -17,12 +17,17 @@ const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
 export async function getGmailMessages() {
   await new Promise(resolve => setTimeout(resolve, 5000));
   try {
+    console.log('clientID', clientID);
+   console.log('clientSecret', clientSecret);
+    console.log('refreshToken', refreshToken);
     const response = await gmail.users.messages.list({
       userId: 'me',
       maxResults: 1,
       q: 'from:no-reply@centigrade.earth'
     });
-
+    console.log('clientID', clientID);
+   console.log('clientSecret', clientSecret);
+   console.log('refreshToken', refreshToken);
     const messages = response.data.messages || [];
 
     if (messages.length === 0) {
