@@ -10,23 +10,28 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    # Checkout the repository
     - uses: actions/checkout@v4
     
     # Build Docker image
     - name: Build Docker image
       run: docker build -t playwright-tests .
     
-    # Run tests inside Docker with test result generation
+    # Run tests inside Docker with explicit report generation
     - name: Run Playwright tests in Docker
       run: |
         mkdir -p test-results
         docker run --rm \
           -v $(pwd)/test-results:/app/test-results \
           playwright-tests \
-          npx playwright test --reporter=html
+          npx playwright test --reporter=junit,html
     
-    # Always upload test results, regardless of test outcome
+    # Debug: List contents of test-results directory
+    - name: Check test results directory
+      run: |
+        ls -la test-results
+        pwd
+    
+    # Upload test results
     - name: Upload test results
       if: always()
       uses: actions/upload-artifact@v4
@@ -38,13 +43,16 @@ jobs:
         retention-days: 30
 
     # Check test results
-    - name: Check test results
+    - name: Check test report
       if: always()
       run: |
-        if [ -f "test-results/report.xml" ]; then
-          echo "Test report generated successfully"
-          cat test-results/report.xml
+        echo "Checking test results directory contents:"
+        find . -name "report.xml"
+        
+        if compgen -G "test-results/*.xml" > /dev/null; then
+          echo "Test report XML found"
+          cat test-results/*.xml
         else
-          echo "No test report found"
+          echo "No test report XML found"
           exit 1
         fi

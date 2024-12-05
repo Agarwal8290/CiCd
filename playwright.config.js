@@ -20,9 +20,9 @@ module.exports = defineConfig({
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
   workers: 1,  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter:  [
-    ['html', { outputFolder: 'test-results/html-report' }],
-    ['junit', { outputFile: 'test-results/report.xml' }]
+  reporter: [
+    ['junit', { outputFile: 'test-results/report.xml' }],
+    ['html', { outputFolder: 'test-results/html-report' }]
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {

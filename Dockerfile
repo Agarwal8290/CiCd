@@ -1,7 +1,5 @@
-# Use official Playwright image
 FROM mcr.microsoft.com/playwright:latest
 
-# Set working directory
 WORKDIR /app
 
 # Copy package files
@@ -19,5 +17,5 @@ RUN npx playwright install
 # Ensure results directory exists
 RUN mkdir -p test-results
 
-# Default command to run tests with HTML and XML reporting
-CMD ["npx", "playwright", "test", "--reporter=html,junit"]
+# Default command to run tests with specific reporting
+CMD ["npx", "playwright", "test", "--reporter=junit,html"]
