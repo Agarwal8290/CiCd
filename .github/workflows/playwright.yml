@@ -1,28 +1,42 @@
 name: Playwright Tests
+
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
+
+    - name: Set up Docker
+      run: |
+        # Set up Docker if not already available (usually it's available by default in the GitHub Actions runners)
+        sudo apt-get update
+        sudo apt-get install -y docker.io
+
+    - name: Build Docker Image
+      run: |
+        docker build -t playwright-tests .
+
+    - name: Run Playwright tests in Docker
       env:
         CLIENT_ID: ${{ secrets.CLIENT_ID }}
         CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
-      run: npx playwright test
+      run: |
+        # Run the tests inside the Docker container
+        docker run \
+          -e CLIENT_ID=${{ secrets.CLIENT_ID }} \
+          -e CLIENT_SECRET=${{ secrets.CLIENT_SECRET }} \
+          -e REFRESH_TOKEN=${{ secrets.REFRESH_TOKEN }} \
+          -v $GITHUB_WORKSPACE:/app \
+          playwright-tests npx playwright test
+
     - uses: actions/upload-artifact@v4
       if: always()
       with:
