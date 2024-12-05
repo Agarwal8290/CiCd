@@ -16,5 +16,8 @@ COPY . .
 # Install Playwright browsers
 RUN npx playwright install
 
-# Default command to run tests
-CMD ["npx", "playwright", "test"]
+# Ensure results directory exists
+RUN mkdir -p test-results
+
+# Default command to run tests with HTML and XML reporting
+CMD ["npx", "playwright", "test", "--reporter=html,junit"]
