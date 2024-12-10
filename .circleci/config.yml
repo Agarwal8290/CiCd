@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Run Playwright tests
           command: |
-            npx playwright test --reporter=junit,html  # Run tests with reporters
+            npx playwright test  # Run tests with reporters
             # npx playwright show-report  # Show the test report
       - store_test_results:
           path: results.xml  # Save test results
