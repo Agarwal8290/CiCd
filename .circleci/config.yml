@@ -22,7 +22,7 @@ jobs:
             npx playwright test --reporter=junit,html  # Run tests with reporters
             # npx playwright show-report  # Show the test report
       - store_test_results:
-          path: test-results  # Save test results
+          path: results.xml  # Save test results
       - store_artifacts:
           path: playwright-report  # Save the Playwright report
 
