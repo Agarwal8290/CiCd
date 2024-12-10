@@ -1,0 +1,27 @@
+version: 2.1
+
+executors:
+  playwright-executor:
+    docker:
+      - image: mcr.microsoft.com/playwright:latest  # Use the Playwright Docker image
+    working_directory: ~/repo
+
+jobs:
+  build:
+    docker:
+      - image: mcr.microsoft.com/playwright:latest  # Docker image for Playwright
+    steps:
+      - checkout  # Checkout the code
+      - run:
+          name: Install dependencies and run Playwright tests
+          command: |
+            # Install dependencies and run Playwright tests inside the container
+            npm ci  # Install dependencies using npm ci (clean install)
+            npx playwright install  # Install Playwright browsers
+            npx playwright test --reporter=junit,html  # Run Playwright tests with HTML and JUnit reporters
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - build  # Execute the build job that installs dependencies and runs the tests
