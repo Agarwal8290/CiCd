@@ -13,12 +13,18 @@ jobs:
     steps:
       - checkout  # Checkout the code
       - run:
-          name: Install dependencies and run Playwright tests
+          name: Install dependencies 
           command: |
             # Install dependencies and run Playwright tests inside the container
             npm ci  # Install dependencies using npm ci (clean install)
             npx playwright install  # Install Playwright browsers
-            npx playwright test --reporter=junit,html  # Run Playwright tests with HTML and JUnit reporters
+      - run:
+          name: run Playwright tests   
+          commmand: |   
+            npx playwright test # Run Playwright tests with HTML and JUnit reporters
+            npx playwright show-report
+      - store_test_results:
+          path: results.xml      
 
 workflows:
   version: 2
