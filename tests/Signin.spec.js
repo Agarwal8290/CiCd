@@ -45,7 +45,7 @@ test.describe('New Todo', () => {
     await page.getByRole('link', { name: 'Get started' }).click();
   
     // Expects page to have a heading with the name of Installation.
-    await expect(page.getByRole('heading', { name: 'Installation123' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
     console.log('has title 14');
 
   });
