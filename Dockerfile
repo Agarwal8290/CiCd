@@ -5,7 +5,7 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
+# Install project dependencies
 RUN npm ci
 
 # Copy entire project
@@ -14,8 +14,11 @@ COPY . .
 # Install Playwright browsers
 RUN npx playwright install
 
-# Ensure results directory exists
-RUN mkdir -p test-results
+# Install Playwright Dependencies
+RUN npx playwright install-deps
+
+# Ensure reports are generated to this directory
+# VOLUME ["/app/test-results", "/app/playwright-report"]
 
 # Default command to run tests with specific reporting
-CMD ["npx", "playwright", "test", "--reporter=junit,html"]
+CMD ["npx", "playwright", "test", "--reporter=junit,html", "--output=test-results"]
